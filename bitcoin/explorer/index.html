@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Explorer</title>
+</head>
+
+<body>
+	<form class="form-horizontal">
+		<fieldset>
+			<legend>Explorer</legend>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="adresse">Adresse</label>  
+			  <div class="col-md-8">
+			  <input id="adresse" name="adresse" placeholder="" class="form-control input-md" type="text">
+				
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="adresse_button"></label>
+			  <div class="col-md-4">
+				<a id="adresse_button" name="adresse_button" class="btn btn-primary">Envoyer</a>
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="transaction">Transaction</label>  
+			  <div class="col-md-8">
+			  <input id="transaction" name="transaction" placeholder="" class="form-control input-md" type="text">
+				
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="transaction_button"></label>
+			  <div class="col-md-4">
+				<a id="transaction_button" name="transaction_button" class="btn btn-primary">Envoyer</a>
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="index">Index</label>  
+			  <div class="col-md-8">
+			  <input id="index" name="index" placeholder="" class="form-control input-md" type="text">
+				
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="index_button"></label>
+			  <div class="col-md-4">
+				<a id="index_button" name="index_button" class="btn btn-primary">Envoyer</a>
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="bloc">Bloc</label>  
+			  <div class="col-md-8">
+			  <input id="bloc" name="bloc" placeholder="" class="form-control input-md" type="text">
+				
+			  </div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="bloc_button"></label>
+			  <div class="col-md-4">
+				<a id="bloc_button" name="bloc_button" class="btn btn-primary">Envoyer</a>
+			  </div>
+			</div>
+
+		</fieldset>
+	</form>
+		<div class="col-lg-12 col-xs-6">
+			<pre>
+				<code id="resultat" class="json kljs"></code>
+			</pre>
+		</div>
+
+</body>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="../../custom.js"></script>
+<script type="text/javascript">
+	function gestion_adresse() {
+		var adresse = document.getElementById("adresse").value;
+		var estAdresse = /^[0-9a-zA-Z]{34}$/.test(adresse);
+		if(estAdresse){
+			url = ' https://bitcoin.mubiz.com/address/' + adresse + '/';
+			fonctionRequeteApi(url, "resultat");
+		} else {
+			// error
+			alert("ERROR!");
+		}
+	}
+	
+	document.getElementById("adresse_button").addEventListener("click", gestion_adresse);
+	
+		function gestion_transaction() {
+		var transaction = document.getElementById("transaction").value;
+		var estTransaction = /^[0-9a-zA-Z]{64}$/.test(transaction);
+		if(estTransaction){
+			url = 'https://api.blockcypher.com/v1/btc/main/txs/' + transaction;
+			fonctionRequeteApi(url, "resultat");
+		} else {
+			// error
+			alert("ERROR!");
+		}
+	}
+	
+	document.getElementById("transaction_button").addEventListener("click", gestion_transaction);
+
+		function gestion_index() {
+		var index = document.getElementById("index").value;
+		var estIndex = /^[0-9]+$/.test(index);
+		if(estIndex){
+			url = 'https://bitcoin.mubiz.com/block_index/' + index + '/';
+			fonctionRequeteApi(url, "resultat");
+		} else {
+			// error
+			alert("ERROR!");
+		}
+	}
+	
+	document.getElementById("index_button").addEventListener("click", gestion_index);
+
+		function gestion_bloc() {
+		var bloc = document.getElementById("bloc").value;
+		var estBloc = /^[0-9a-zA-Z]{64}$/.test(bloc);
+		if(estBloc){
+			url = 'https://bitcoin.mubiz.com/block_hash/' + bloc + '/';
+			fonctionRequeteApi(url, "resultat");
+		} else {
+			// error
+			alert("ERROR!");
+		}
+	}
+	
+	document.getElementById("bloc_button").addEventListener("click", gestion_bloc);
+
+</script>
+</html> 

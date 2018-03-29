@@ -1,0 +1,59 @@
+pragma solidity ^0.4.18;
+
+contract vote
+{
+
+    struct Ville {
+        uint voteCount;
+        string nom_ville;
+    }
+    
+    //variable
+    address public owner;
+   mapping(address => uint) public votants;
+   Ville[] public villes;
+
+    //Modifier et event
+    modifier isowner(){
+        if(msg.sender!=owner){
+            revert();
+            _;
+        }
+    
+    }
+
+    //Constructeur
+    function vote() public {
+        owner=msg.sender;
+    }
+    
+    function ajout_votants(string _votant) public {
+        votants[msg.sender]=1;
+    }
+    
+    function ajout_villes(string _villes) public {
+        villes.push(Ville({
+                nom_ville: _villes,
+                voteCount: 0
+        }));
+    }
+    
+    function voter(uint _indicevilles) public{
+        if (votants[msg.sender]==1)
+        {
+        villes[_indicevilles].voteCount+=1;
+        votants[msg.sender]--;
+        }
+        else
+        {
+            "Vous avez déjà voté ";
+        }
+    }
+    
+    
+    //Functions
+    function kill() isowner(){
+        delete owner;
+        selfdestruct(msg.sender);
+    }
+}
